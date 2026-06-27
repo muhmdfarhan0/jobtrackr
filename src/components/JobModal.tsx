@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { X, Plus, Trash2 } from 'lucide-react'
 import type { Job, JobStatus } from '../types'
-import { STATUS_COLUMNS, PRIORITY_COLORS } from '../types'
+import { STATUS_COLUMNS, PRIORITY_BADGE } from '../types'
 
 interface Props {
   job?: Job | null
@@ -64,13 +64,13 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={e => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] flex flex-col">
+      <div className="w-full max-w-lg bg-white dark:bg-slate-950 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
             {job ? 'Edit Job' : 'Add Job'}
           </h2>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 cursor-pointer">
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 cursor-pointer">
             <X size={16} />
           </button>
         </div>
@@ -79,8 +79,8 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 sm:col-span-1">
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-                Company <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                Company <span className="text-slate-900 dark:text-white">*</span>
               </label>
               <input
                 ref={firstRef}
@@ -88,35 +88,35 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
                 onChange={e => set('company', e.target.value)}
                 required
                 className="input"
-                placeholder="Google, Meta, Startup…"
+                placeholder="Google, Meta, Startup..."
               />
             </div>
             <div className="col-span-2 sm:col-span-1">
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-                Role <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+                Role <span className="text-slate-900 dark:text-white">*</span>
               </label>
               <input
                 value={form.role}
                 onChange={e => set('role', e.target.value)}
                 required
                 className="input"
-                placeholder="Software Engineer…"
+                placeholder="Software Engineer..."
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Location</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Location</label>
               <input
                 value={form.location}
                 onChange={e => set('location', e.target.value)}
                 className="input"
-                placeholder="Remote, NYC…"
+                placeholder="Remote, NYC..."
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Salary</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Salary</label>
               <input
                 value={form.salary}
                 onChange={e => set('salary', e.target.value)}
@@ -128,7 +128,7 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Status</label>
               <select
                 value={form.status}
                 onChange={e => set('status', e.target.value as JobStatus)}
@@ -140,7 +140,7 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Priority</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Priority</label>
               <select
                 value={form.priority}
                 onChange={e => set('priority', e.target.value as Job['priority'])}
@@ -155,7 +155,7 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Date Applied</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Date Applied</label>
               <input
                 type="date"
                 value={form.dateApplied}
@@ -164,29 +164,29 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Job URL</label>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Job URL</label>
               <input
                 type="url"
                 value={form.url}
                 onChange={e => set('url', e.target.value)}
                 className="input"
-                placeholder="https://…"
+                placeholder="https://..."
               />
             </div>
           </div>
 
           {/* Tags */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Tags</label>
+            <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Tags</label>
             <div className="flex gap-2">
               <input
                 value={tagInput}
                 onChange={e => setTagInput(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag() } }}
                 className="input flex-1"
-                placeholder="React, Remote, Startup… (Enter to add)"
+                placeholder="React, Remote, Startup... (Enter to add)"
               />
-              <button type="button" onClick={addTag} className="px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+              <button type="button" onClick={addTag} className="px-3 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
                 <Plus size={14} />
               </button>
             </div>
@@ -195,13 +195,13 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
                 {form.tags.map(tag => (
                   <span
                     key={tag}
-                    className="flex items-center gap-1 text-xs bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800"
+                    className="flex items-center gap-1 text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700"
                   >
                     {tag}
                     <button
                       type="button"
                       onClick={() => set('tags', form.tags.filter(t => t !== tag))}
-                      className="hover:text-red-500 cursor-pointer"
+                      className="hover:text-slate-900 dark:hover:text-white cursor-pointer"
                     >
                       <X size={10} />
                     </button>
@@ -212,20 +212,20 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Notes</label>
+            <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Notes</label>
             <textarea
               value={form.notes}
               onChange={e => set('notes', e.target.value)}
               rows={3}
               className="input resize-none"
-              placeholder="Recruiter contact, interview feedback, next steps…"
+              placeholder="Recruiter contact, interview feedback, next steps..."
             />
           </div>
 
           {/* Priority preview */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500">Priority:</span>
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${PRIORITY_COLORS[form.priority]}`}>
+            <span className="text-xs text-slate-400">Priority:</span>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${PRIORITY_BADGE[form.priority]}`}>
               {form.priority}
             </span>
           </div>
@@ -237,7 +237,7 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
             <button
               type="button"
               onClick={() => { onDelete(); onClose() }}
-              className="flex items-center gap-1.5 text-sm text-red-500 hover:text-red-700 cursor-pointer"
+              className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             >
               <Trash2 size={14} /> Delete
             </button>
@@ -246,15 +246,14 @@ export default function JobModal({ job, defaultStatus, onSave, onClose, onDelete
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg cursor-pointer"
+              className="px-4 py-2 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-lg cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              form="job-form"
               onClick={handleSubmit}
-              className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg cursor-pointer"
+              className="px-4 py-2 text-sm bg-slate-900 dark:bg-white hover:bg-black dark:hover:bg-slate-100 text-white dark:text-slate-900 font-medium rounded-lg cursor-pointer"
             >
               {job ? 'Save Changes' : 'Add Job'}
             </button>

@@ -6,12 +6,12 @@ interface Props {
   jobs: Job[]
 }
 
-function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: React.ReactNode; color: string }) {
+function StatCard({ label, value, icon }: { label: string; value: string | number; icon: React.ReactNode }) {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm text-slate-500 dark:text-slate-400">{label}</span>
-        <span className={`p-2 rounded-lg ${color}`}>{icon}</span>
+        <span className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">{icon}</span>
       </div>
       <p className="text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
     </div>
@@ -47,33 +47,33 @@ export default function Stats({ jobs }: Props) {
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <StatCard label="Total Jobs" value={total} icon={<Target size={16} />} color="bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400" />
-        <StatCard label="Active" value={active} icon={<TrendingUp size={16} />} color="bg-purple-50 text-purple-600 dark:bg-purple-950/50 dark:text-purple-400" />
-        <StatCard label="Interviews" value={interviews} icon={<Clock size={16} />} color="bg-yellow-50 text-yellow-600 dark:bg-yellow-950/50 dark:text-yellow-400" />
-        <StatCard label="Offers" value={offers} icon={<Award size={16} />} color="bg-green-50 text-green-600 dark:bg-green-950/50 dark:text-green-400" />
-        <StatCard label="Rejected" value={rejected} icon={<XCircle size={16} />} color="bg-red-50 text-red-500 dark:bg-red-950/50 dark:text-red-400" />
-        <StatCard label="Offer Rate" value={`${offerRate}%`} icon={<CheckCircle2 size={16} />} color="bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400" />
+        <StatCard label="Total Jobs"   value={total}           icon={<Target size={16} />}       />
+        <StatCard label="Active"       value={active}          icon={<TrendingUp size={16} />}   />
+        <StatCard label="Interviews"   value={interviews}      icon={<Clock size={16} />}        />
+        <StatCard label="Offers"       value={offers}          icon={<Award size={16} />}        />
+        <StatCard label="Rejected"     value={rejected}        icon={<XCircle size={16} />}      />
+        <StatCard label="Offer Rate"   value={`${offerRate}%`} icon={<CheckCircle2 size={16} />} />
       </div>
 
       {/* Response rate bar */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold text-slate-900 dark:text-white">Response Rate</h3>
-          <span className="text-2xl font-bold text-blue-600">{responseRate}%</span>
+          <span className="text-2xl font-bold text-slate-900 dark:text-white">{responseRate}%</span>
         </div>
-        <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2.5">
+        <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5">
           <div
-            className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+            className="bg-slate-900 dark:bg-white h-2.5 rounded-full transition-all duration-500"
             style={{ width: `${responseRate}%` }}
           />
         </div>
-        <p className="text-xs text-slate-500 mt-2">
+        <p className="text-xs text-slate-400 mt-2">
           {applied - jobs.filter(j => j.status === 'applied').length} responses out of {applied} applications
         </p>
       </div>
 
       {/* Pipeline funnel */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
         <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Pipeline Breakdown</h3>
         <div className="space-y-2">
           {STATUS_COLUMNS.map(col => {
@@ -81,16 +81,10 @@ export default function Stats({ jobs }: Props) {
             const pct = total > 0 ? (count / total) * 100 : 0
             return (
               <div key={col.id} className="flex items-center gap-3">
-                <span className="text-sm text-slate-600 dark:text-slate-400 w-20 shrink-0">{col.label}</span>
-                <div className="flex-1 bg-slate-100 dark:bg-slate-700 rounded-full h-2">
+                <span className="text-sm text-slate-500 dark:text-slate-400 w-20 shrink-0">{col.label}</span>
+                <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full h-2">
                   <div
-                    className={`h-2 rounded-full transition-all duration-500 ${
-                      col.id === 'offer' ? 'bg-green-500' :
-                      col.id === 'rejected' ? 'bg-red-400' :
-                      col.id === 'interview' ? 'bg-purple-500' :
-                      col.id === 'screening' ? 'bg-yellow-500' :
-                      col.id === 'applied' ? 'bg-blue-500' : 'bg-slate-400'
-                    }`}
+                    className="bg-slate-900 dark:bg-white h-2 rounded-full transition-all duration-500"
                     style={{ width: `${pct}%` }}
                   />
                 </div>
@@ -103,13 +97,13 @@ export default function Stats({ jobs }: Props) {
 
       {/* Top tags */}
       {topTags.length > 0 && (
-        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
           <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Top Skills / Tags</h3>
           <div className="flex flex-wrap gap-2">
             {topTags.map(([tag, count]) => (
-              <div key={tag} className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 px-3 py-1.5 rounded-full text-sm border border-blue-100 dark:border-blue-900">
+              <div key={tag} className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-full text-sm border border-slate-200 dark:border-slate-700">
                 <span className="font-medium">{tag}</span>
-                <span className="text-blue-400 text-xs">{count}</span>
+                <span className="text-slate-400 text-xs">{count}</span>
               </div>
             ))}
           </div>
@@ -117,21 +111,21 @@ export default function Stats({ jobs }: Props) {
       )}
 
       {avgDaysToApply !== null && (
-        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4">
-          <div className="p-3 bg-slate-100 dark:bg-slate-700 rounded-xl">
-            <Clock size={20} className="text-slate-600 dark:text-slate-300" />
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 flex items-center gap-4">
+          <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+            <Clock size={20} className="text-slate-500 dark:text-slate-400" />
           </div>
           <div>
             <p className="text-2xl font-bold text-slate-900 dark:text-white">{avgDaysToApply} day{avgDaysToApply !== 1 ? 's' : ''}</p>
-            <p className="text-sm text-slate-500">Average time from save to application</p>
+            <p className="text-sm text-slate-400">Average time from save to application</p>
           </div>
         </div>
       )}
 
       {total === 0 && (
-        <div className="text-center py-12 text-slate-400">
-          <Target size={40} className="mx-auto mb-3 opacity-30" />
-          <p>No jobs tracked yet. Add some to see your stats!</p>
+        <div className="text-center py-12 text-slate-300 dark:text-slate-700">
+          <Target size={40} className="mx-auto mb-3" />
+          <p>No jobs tracked yet. Add some to see your stats.</p>
         </div>
       )}
     </div>
